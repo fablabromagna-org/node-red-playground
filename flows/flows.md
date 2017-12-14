@@ -6,4 +6,8 @@ Per testare e adattare questi flow alle vostre esigenze eseguite l'import del JS
 
 ## Elenco dei flows
 
-* 
+### WebService JSON con dati da MongoDB
+
+Realizzazione di un semplice webservice che estrae i dati da un DB MongoDB (che può essere sullo stesso sistema o in rete) e li restituisce in formato JSON.
+Come esempio vengono estratti i dati relativi ad una serie di circolari emesse, per poterle poi presentare su Totem Informativi.
+
