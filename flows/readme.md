@@ -6,6 +6,12 @@ Per testare e adattare questi flow alle vostre esigenze eseguite l'import del JS
 
 ## Elenco dei flows
 
+### Telegram 
+Elenco di flows che utilizzano i nodi chatbot per integrare Node-RED e Telegram
+
+#### Invio posizione GPS
+Permette l'invio di una posizione arbitraria (lat - lon) ad una chat Telegram. La posizione verrà visualizzata nel client telegram su una mappa
+
 ### WebService JSON con dati da MongoDB
 
 Realizzazione di un semplice webservice che estrae i dati da un DB MongoDB (che può essere sullo stesso sistema o in rete) e li restituisce in formato JSON.
