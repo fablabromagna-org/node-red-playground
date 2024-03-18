@@ -1,0 +1,168 @@
+[
+    {
+        "id": "629b749093cba131",
+        "type": "inject",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "mioval",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "ivan",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 180,
+        "wires": [
+            [
+                "678642c2aed52acb"
+            ]
+        ]
+    },
+    {
+        "id": "0ee6b2cb0ee52d57",
+        "type": "debug",
+        "z": "a2b4dd72c07a965d",
+        "name": "debug 8",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "678642c2aed52acb",
+        "type": "random",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "low": 1,
+        "high": "1000",
+        "inte": "true",
+        "property": "mioval",
+        "x": 540,
+        "y": 180,
+        "wires": [
+            [
+                "ce1e9abf95c55631"
+            ]
+        ]
+    },
+    {
+        "id": "ce1e9abf95c55631",
+        "type": "range",
+        "z": "a2b4dd72c07a965d",
+        "minin": "1",
+        "maxin": "1000",
+        "minout": "1",
+        "maxout": "255",
+        "action": "scale",
+        "round": true,
+        "property": "mioval",
+        "name": "",
+        "x": 760,
+        "y": 180,
+        "wires": [
+            [
+                "afaf5563c4f279e8"
+            ]
+        ]
+    },
+    {
+        "id": "3a7394e164bd1a32",
+        "type": "file",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "filename": "hello.txt",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1360,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5cd731d829b3cee1",
+        "type": "csv",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,nome,valore",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1190,
+        "y": 180,
+        "wires": [
+            [
+                "3a7394e164bd1a32"
+            ]
+        ]
+    },
+    {
+        "id": "afaf5563c4f279e8",
+        "type": "change",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"timestamp\":msg.payload,\t    \"nome\": msg.topic,\t    \"valore\":msg.mioval\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 180,
+        "wires": [
+            [
+                "5cd731d829b3cee1",
+                "0ee6b2cb0ee52d57"
+            ]
+        ]
+    },
+    {
+        "id": "f827fdf51d745e60",
+        "type": "comment",
+        "z": "a2b4dd72c07a965d",
+        "name": "Hello World",
+        "info": "",
+        "x": 310,
+        "y": 140,
+        "wires": []
+    }
+]

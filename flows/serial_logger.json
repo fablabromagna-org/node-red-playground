@@ -1,0 +1,355 @@
+[
+    {
+        "id": "ae267f3fb9910a69",
+        "type": "serial in",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "serial": "71a9af05dd32a4de",
+        "x": 90,
+        "y": 260,
+        "wires": [
+            [
+                "b6368884f3d9db3c"
+            ]
+        ]
+    },
+    {
+        "id": "b6368884f3d9db3c",
+        "type": "switch",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "MQTT",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 250,
+        "y": 260,
+        "wires": [
+            [
+                "3fdc5fc2f2117acc",
+                "3359bb7bf7a18b22"
+            ]
+        ]
+    },
+    {
+        "id": "3fdc5fc2f2117acc",
+        "type": "switch",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "photocell",
+                "vt": "str"
+            },
+            {
+                "t": "regex",
+                "v": "button.*val:0",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 390,
+        "y": 260,
+        "wires": [
+            [
+                "be0aa60ab0797255"
+            ],
+            [
+                "6d019a1c83ced821"
+            ]
+        ]
+    },
+    {
+        "id": "3359bb7bf7a18b22",
+        "type": "debug",
+        "z": "d55e8e3a6891ddf6",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "be0aa60ab0797255",
+        "type": "function",
+        "z": "d55e8e3a6891ddf6",
+        "name": "function 1",
+        "func": "let sensor_name=\"light\"\n\nlet index1 = msg.payload.indexOf(\"val:\")\nlet index2 = msg.payload.indexOf(\" -> \")\n//console.log(\" ### index2 = \", index2)\nlet val = msg.payload.substr(index1+4, index2-index1-4);\nlet res = msg.payload.substr(index2+4,3);\n\n\nmsg.payload = {\n    timestamp: Date.now(),\n    sensor: sensor_name,\n    value: val,\n    result: res\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 220,
+        "wires": [
+            [
+                "d6b693ca73f126e3"
+            ]
+        ]
+    },
+    {
+        "id": "c750783860819d0f",
+        "type": "csv",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 970,
+        "y": 220,
+        "wires": [
+            [
+                "adf53569f9ddfb12"
+            ]
+        ]
+    },
+    {
+        "id": "288d5df55d3b3609",
+        "type": "inject",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "EVENTO 1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "bb7372bce62940b4"
+            ]
+        ]
+    },
+    {
+        "id": "adf53569f9ddfb12",
+        "type": "file",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "filename": "/home/ivan/corso_nodered/test1.log",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1220,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de66119465c5efcf",
+        "type": "template",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "=== timestamp: {{payload}} -- event: {{topic}}  ===\n",
+        "output": "str",
+        "x": 820,
+        "y": 580,
+        "wires": [
+            [
+                "adf53569f9ddfb12"
+            ]
+        ]
+    },
+    {
+        "id": "2c0f9b9d26b245b2",
+        "type": "inject",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "EVENTO 2",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 600,
+        "wires": [
+            [
+                "bb7372bce62940b4"
+            ]
+        ]
+    },
+    {
+        "id": "10a9cd77c9337d82",
+        "type": "moment",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "",
+        "locale": "",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "",
+        "x": 540,
+        "y": 580,
+        "wires": [
+            [
+                "de66119465c5efcf"
+            ]
+        ]
+    },
+    {
+        "id": "d6b693ca73f126e3",
+        "type": "moment",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "topic": "",
+        "input": "payload.timestamp",
+        "inputType": "msg",
+        "inTz": "Europe/Rome",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "",
+        "locale": "it-IT",
+        "output": "payload.timestamp",
+        "outputType": "msg",
+        "outTz": "Europe/Rome",
+        "x": 780,
+        "y": 220,
+        "wires": [
+            [
+                "c750783860819d0f"
+            ]
+        ]
+    },
+    {
+        "id": "0d951e3fb3d0b18a",
+        "type": "template",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "=== timestamp: {{payload}} -- event: {{topic}}  ===\n",
+        "output": "str",
+        "x": 820,
+        "y": 460,
+        "wires": [
+            [
+                "adf53569f9ddfb12"
+            ]
+        ]
+    },
+    {
+        "id": "6d019a1c83ced821",
+        "type": "moment",
+        "z": "d55e8e3a6891ddf6",
+        "name": "",
+        "topic": "BUTTON PRESSED",
+        "input": "",
+        "inputType": "date",
+        "inTz": "Europe/Rome",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "",
+        "locale": "it-IT",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Rome",
+        "x": 620,
+        "y": 460,
+        "wires": [
+            [
+                "0d951e3fb3d0b18a"
+            ]
+        ]
+    },
+    {
+        "id": "bb7372bce62940b4",
+        "type": "junction",
+        "z": "d55e8e3a6891ddf6",
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "10a9cd77c9337d82"
+            ]
+        ]
+    },
+    {
+        "id": "71a9af05dd32a4de",
+        "type": "serial-port",
+        "name": "usb_arduino",
+        "serialport": "/dev/ttyUSB1",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    }
+]

@@ -1,0 +1,298 @@
+[
+    {
+        "id": "3a1557b96f5728c6",
+        "type": "mqtt in",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "topic": "flr/ws20240316/witty1/light",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "23bebd960f495689",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 530,
+        "y": 1240,
+        "wires": [
+            [
+                "f9feae4ebddc050b"
+            ]
+        ]
+    },
+    {
+        "id": "2717533deb59626c",
+        "type": "mqtt in",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "topic": "flr/ws20240316/witty1/button",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "23bebd960f495689",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 540,
+        "y": 1300,
+        "wires": [
+            [
+                "f9feae4ebddc050b"
+            ]
+        ]
+    },
+    {
+        "id": "f9feae4ebddc050b",
+        "type": "debug",
+        "z": "b47e2cfe51585b31",
+        "name": "debug mqtt",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 930,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "f38a72d9c359f15e",
+        "type": "mqtt out",
+        "z": "b47e2cfe51585b31",
+        "name": "led_rgb",
+        "topic": "flr/ws20240316/witty1/led_rgb",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "23bebd960f495689",
+        "x": 940,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "aca886def18accaf",
+        "type": "mqtt out",
+        "z": "b47e2cfe51585b31",
+        "name": "led_onoff",
+        "topic": "flr/ws20240316/witty1/led_onoff",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "23bebd960f495689",
+        "x": 940,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "8e11b02f80aeb75c",
+        "type": "toggle",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "onOffTopic": "",
+        "onValue": "true",
+        "onType": "bool",
+        "offValue": "false",
+        "offType": "bool",
+        "toggleTopic": "",
+        "toggleValue": "",
+        "toggleType": "any",
+        "passOnOff": "ifChanged",
+        "x": 730,
+        "y": 1500,
+        "wires": [
+            [
+                "aca886def18accaf"
+            ]
+        ]
+    },
+    {
+        "id": "34cfacb0d329c226",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "LED ON/OFF",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 520,
+        "y": 1500,
+        "wires": [
+            [
+                "8e11b02f80aeb75c"
+            ]
+        ]
+    },
+    {
+        "id": "88e0e65b7b369ea3",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "RED",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ff0000",
+        "payloadType": "str",
+        "x": 510,
+        "y": 1600,
+        "wires": [
+            [
+                "2019be4db96c5d5e"
+            ]
+        ]
+    },
+    {
+        "id": "13b477d70adee8b6",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "GREEN",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "00ff00",
+        "payloadType": "str",
+        "x": 510,
+        "y": 1640,
+        "wires": [
+            [
+                "2019be4db96c5d5e"
+            ]
+        ]
+    },
+    {
+        "id": "e393f56708520c13",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "BLUE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0000ff",
+        "payloadType": "str",
+        "x": 510,
+        "y": 1680,
+        "wires": [
+            [
+                "2019be4db96c5d5e"
+            ]
+        ]
+    },
+    {
+        "id": "565d2dc5811d6cba",
+        "type": "comment",
+        "z": "b47e2cfe51585b31",
+        "name": "MQTT Subscribing",
+        "info": "",
+        "x": 530,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "1153d7a6cf17d2da",
+        "type": "comment",
+        "z": "b47e2cfe51585b31",
+        "name": "MQTT Publishing",
+        "info": "",
+        "x": 520,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "2019be4db96c5d5e",
+        "type": "junction",
+        "z": "b47e2cfe51585b31",
+        "x": 720,
+        "y": 1640,
+        "wires": [
+            [
+                "f38a72d9c359f15e"
+            ]
+        ]
+    },
+    {
+        "id": "23bebd960f495689",
+        "type": "mqtt-broker",
+        "name": "mosquitto test",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

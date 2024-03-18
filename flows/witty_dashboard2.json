@@ -1,0 +1,693 @@
+[
+    {
+        "id": "f38a72d9c359f15e",
+        "type": "mqtt out",
+        "z": "b47e2cfe51585b31",
+        "name": "flr/ws20240316/witty1/led_rgb",
+        "topic": "flr/ws20240316/witty1/led_rgb",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "23bebd960f495689",
+        "x": 1310,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "aca886def18accaf",
+        "type": "mqtt out",
+        "z": "b47e2cfe51585b31",
+        "name": "flr/ws20240316/witty1/led_onoff",
+        "topic": "flr/ws20240316/witty1/led_onoff",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "23bebd960f495689",
+        "x": 1310,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "8e11b02f80aeb75c",
+        "type": "toggle",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "onOffTopic": "",
+        "onValue": "true",
+        "onType": "bool",
+        "offValue": "false",
+        "offType": "bool",
+        "toggleTopic": "",
+        "toggleValue": "",
+        "toggleType": "any",
+        "passOnOff": "ifChanged",
+        "x": 1030,
+        "y": 560,
+        "wires": [
+            [
+                "aca886def18accaf"
+            ]
+        ]
+    },
+    {
+        "id": "34cfacb0d329c226",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "LED ON/OFF",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 610,
+        "y": 560,
+        "wires": [
+            [
+                "8e11b02f80aeb75c"
+            ]
+        ]
+    },
+    {
+        "id": "88e0e65b7b369ea3",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "RED",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ff0000",
+        "payloadType": "str",
+        "x": 590,
+        "y": 840,
+        "wires": [
+            [
+                "2019be4db96c5d5e"
+            ]
+        ]
+    },
+    {
+        "id": "13b477d70adee8b6",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "GREEN",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "00ff00",
+        "payloadType": "str",
+        "x": 590,
+        "y": 880,
+        "wires": [
+            [
+                "2019be4db96c5d5e"
+            ]
+        ]
+    },
+    {
+        "id": "e393f56708520c13",
+        "type": "inject",
+        "z": "b47e2cfe51585b31",
+        "name": "BLUE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0000ff",
+        "payloadType": "str",
+        "x": 590,
+        "y": 920,
+        "wires": [
+            [
+                "2019be4db96c5d5e"
+            ]
+        ]
+    },
+    {
+        "id": "1153d7a6cf17d2da",
+        "type": "comment",
+        "z": "b47e2cfe51585b31",
+        "name": "Leggo da dashboard e invio via MQTT",
+        "info": "",
+        "x": 670,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "3465f408dd78b174",
+        "type": "ui-switch",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "label": "LED switch",
+        "group": "dec99ee671872413",
+        "order": 1,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 610,
+        "y": 620,
+        "wires": [
+            [
+                "aca886def18accaf"
+            ]
+        ]
+    },
+    {
+        "id": "e98a491510e6912f",
+        "type": "ui-gauge",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "group": "dec99ee671872413",
+        "order": 6,
+        "width": "6",
+        "height": "3",
+        "gtype": "gauge-34",
+        "gstyle": "needle",
+        "title": "LUCE",
+        "units": "units",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5e5c64"
+            },
+            {
+                "from": "300",
+                "color": "#f9f06b"
+            },
+            {
+                "from": "700",
+                "color": "#00b500"
+            }
+        ],
+        "min": 0,
+        "max": "1024",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 1490,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "cc990d1173a4af76",
+        "type": "comment",
+        "z": "b47e2cfe51585b31",
+        "name": "Leggo da MQTT e invio alla dashboard",
+        "info": "",
+        "x": 670,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "672b190eaa83c3db",
+        "type": "mqtt in",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "topic": "flr/ws20240316/witty1/light",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "23bebd960f495689",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 650,
+        "y": 200,
+        "wires": [
+            [
+                "466eea7564ba1562",
+                "ec04ab9af37da69a"
+            ]
+        ]
+    },
+    {
+        "id": "466eea7564ba1562",
+        "type": "debug",
+        "z": "b47e2cfe51585b31",
+        "name": "debug witty",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b2f33d298109ec27",
+        "type": "mqtt in",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "topic": "flr/ws20240316/witty1/button",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "23bebd960f495689",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 660,
+        "y": 300,
+        "wires": [
+            [
+                "466eea7564ba1562",
+                "6c9b61f92317b806"
+            ]
+        ]
+    },
+    {
+        "id": "ec04ab9af37da69a",
+        "type": "change",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "light",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 200,
+        "wires": [
+            [
+                "9d79d88f79630d00",
+                "e98a491510e6912f"
+            ]
+        ]
+    },
+    {
+        "id": "6c9b61f92317b806",
+        "type": "change",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "button",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1040,
+        "y": 300,
+        "wires": [
+            [
+                "9d79d88f79630d00",
+                "7ef1cd2668d941b1"
+            ]
+        ]
+    },
+    {
+        "id": "9d79d88f79630d00",
+        "type": "function",
+        "z": "b47e2cfe51585b31",
+        "name": "function 3",
+        "func": "var msg = {};\nvar msg1 = {};\nmsg.payload = flow.get(\"light\")\nmsg.topic = 'Light';\nmsg1.payload = flow.get(\"button\") * 100\nmsg1.topic = 'button';\nreturn [msg, msg1];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 260,
+        "wires": [
+            [
+                "3fd1384ab01fc51d"
+            ],
+            [
+                "3fd1384ab01fc51d"
+            ]
+        ]
+    },
+    {
+        "id": "35d28e79d9307310",
+        "type": "ui-chart",
+        "z": "b47e2cfe51585b31",
+        "group": "dec99ee671872413",
+        "name": "",
+        "label": "chart",
+        "order": 7,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "msg",
+        "xAxisType": "time",
+        "yAxisProperty": "",
+        "ymin": "",
+        "ymax": "",
+        "action": "append",
+        "pointShape": "false",
+        "pointRadius": "6",
+        "showLegend": true,
+        "removeOlder": "10",
+        "removeOlderUnit": "60",
+        "removeOlderPoints": "100",
+        "colors": [
+            "#1f77b4",
+            "#c64600",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "width": "6",
+        "height": "8",
+        "className": "",
+        "x": 1490,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83a58dcfc56a349d",
+        "type": "ui-button",
+        "z": "b47e2cfe51585b31",
+        "group": "dec99ee671872413",
+        "name": "",
+        "label": "RED",
+        "order": 2,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "ff0000",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 590,
+        "y": 680,
+        "wires": [
+            [
+                "0e051855c73b3c96"
+            ]
+        ]
+    },
+    {
+        "id": "071bf307cd0d39e1",
+        "type": "ui-button",
+        "z": "b47e2cfe51585b31",
+        "group": "dec99ee671872413",
+        "name": "",
+        "label": "GREEN",
+        "order": 3,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "00ff00",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 600,
+        "y": 720,
+        "wires": [
+            [
+                "0e051855c73b3c96"
+            ]
+        ]
+    },
+    {
+        "id": "6b07331a7e7693c1",
+        "type": "ui-button",
+        "z": "b47e2cfe51585b31",
+        "group": "dec99ee671872413",
+        "name": "",
+        "label": "BLUE",
+        "order": 4,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "0000ff",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 590,
+        "y": 760,
+        "wires": [
+            [
+                "0e051855c73b3c96"
+            ]
+        ]
+    },
+    {
+        "id": "7ef1cd2668d941b1",
+        "type": "ui-led",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "group": "dec99ee671872413",
+        "order": 5,
+        "width": "1",
+        "height": "1",
+        "label": "Button",
+        "labelPlacement": "left",
+        "labelAlignment": "center",
+        "states": [
+            {
+                "value": "0",
+                "valueType": "num",
+                "color": "#9a9996"
+            },
+            {
+                "value": "1",
+                "valueType": "num",
+                "color": "#00ff00"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "square",
+        "showBorder": true,
+        "showGlow": true,
+        "x": 1490,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "2019be4db96c5d5e",
+        "type": "junction",
+        "z": "b47e2cfe51585b31",
+        "x": 760,
+        "y": 880,
+        "wires": [
+            [
+                "f38a72d9c359f15e"
+            ]
+        ]
+    },
+    {
+        "id": "3fd1384ab01fc51d",
+        "type": "junction",
+        "z": "b47e2cfe51585b31",
+        "x": 1380,
+        "y": 260,
+        "wires": [
+            [
+                "35d28e79d9307310"
+            ]
+        ]
+    },
+    {
+        "id": "0e051855c73b3c96",
+        "type": "junction",
+        "z": "b47e2cfe51585b31",
+        "x": 760,
+        "y": 720,
+        "wires": [
+            [
+                "f38a72d9c359f15e"
+            ]
+        ]
+    },
+    {
+        "id": "23bebd960f495689",
+        "type": "mqtt-broker",
+        "name": "mosquitto test",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "dec99ee671872413",
+        "type": "ui-group",
+        "name": "WITTY",
+        "page": "280cf8ee130a0cce",
+        "width": "6",
+        "height": "1",
+        "order": -1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "280cf8ee130a0cce",
+        "type": "ui-page",
+        "name": "WITTY DASHBOARD 2.0",
+        "ui": "01ff43bd7638f9d9",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "26163f82d6536913",
+        "order": -1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "01ff43bd7638f9d9",
+        "type": "ui-base",
+        "name": "FLR Workshop",
+        "path": "/dashboard",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false
+    },
+    {
+        "id": "26163f82d6536913",
+        "type": "ui-theme",
+        "name": "Theme Name",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094ce",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    }
+]

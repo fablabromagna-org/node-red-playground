@@ -1,0 +1,448 @@
+[
+    {
+        "id": "0f7b5c1eb4f6d96c",
+        "type": "mqtt in",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "topic": "flr/ws20240316/witty1/light",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "23bebd960f495689",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 490,
+        "y": 160,
+        "wires": [
+            [
+                "94fb0d64dbdd2d78",
+                "727b02d8a8548287"
+            ]
+        ]
+    },
+    {
+        "id": "94fb0d64dbdd2d78",
+        "type": "debug",
+        "z": "b47e2cfe51585b31",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d65606bd255f72cd",
+        "type": "mqtt in",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "topic": "flr/ws20240316/witty1/button",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "23bebd960f495689",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "94fb0d64dbdd2d78",
+                "7a62a91bdd4dd9a1"
+            ]
+        ]
+    },
+    {
+        "id": "727b02d8a8548287",
+        "type": "change",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "light",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 260,
+        "wires": [
+            [
+                "8d5784ef04b5d4e9",
+                "ad4869a03eb27f48"
+            ]
+        ]
+    },
+    {
+        "id": "7a62a91bdd4dd9a1",
+        "type": "change",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "button",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 320,
+        "wires": [
+            [
+                "8d5784ef04b5d4e9"
+            ]
+        ]
+    },
+    {
+        "id": "8d5784ef04b5d4e9",
+        "type": "function",
+        "z": "b47e2cfe51585b31",
+        "name": "function 2",
+        "func": "var msg = {};\nvar msg1 = {};\nmsg.payload = flow.get(\"light\")\nmsg.topic = 'Light';\nmsg1.payload = flow.get(\"button\") * 100\nmsg1.topic = 'button';\nreturn [msg, msg1];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 280,
+        "wires": [
+            [
+                "93caafc9ce1ca5eb"
+            ],
+            [
+                "93caafc9ce1ca5eb"
+            ]
+        ]
+    },
+    {
+        "id": "974caa6ddb0c44f3",
+        "type": "ui_switch",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "label": "LED",
+        "tooltip": "",
+        "group": "48f09fdf4ff799e1",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 590,
+        "y": 560,
+        "wires": [
+            [
+                "eeee008f12e7b015"
+            ]
+        ]
+    },
+    {
+        "id": "81df1ada82c306dc",
+        "type": "mqtt out",
+        "z": "b47e2cfe51585b31",
+        "name": "led_rgb",
+        "topic": "flr/ws20240316/witty1/led_rgb",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "23bebd960f495689",
+        "x": 1060,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "eeee008f12e7b015",
+        "type": "mqtt out",
+        "z": "b47e2cfe51585b31",
+        "name": "led_onoff",
+        "topic": "flr/ws20240316/witty1/led_onoff",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "23bebd960f495689",
+        "x": 1060,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "52a834cd6b0e060f",
+        "type": "ui_button",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "group": "48f09fdf4ff799e1",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "RED",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "",
+        "payload": "ff0000",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 590,
+        "y": 620,
+        "wires": [
+            [
+                "81df1ada82c306dc"
+            ]
+        ]
+    },
+    {
+        "id": "43d6bb4d71aa7f31",
+        "type": "ui_button",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "group": "48f09fdf4ff799e1",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "GREEN",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "green",
+        "className": "",
+        "icon": "",
+        "payload": "00ff00",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 600,
+        "y": 660,
+        "wires": [
+            [
+                "81df1ada82c306dc"
+            ]
+        ]
+    },
+    {
+        "id": "6d153d906f6f0d58",
+        "type": "ui_button",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "group": "48f09fdf4ff799e1",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "BLUE",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "blue",
+        "className": "",
+        "icon": "",
+        "payload": "0000ff",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 590,
+        "y": 700,
+        "wires": [
+            [
+                "81df1ada82c306dc"
+            ]
+        ]
+    },
+    {
+        "id": "234fc6f34ffeae8d",
+        "type": "ui_chart",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "group": "48f09fdf4ff799e1",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1024",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#e66100",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1370,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad4869a03eb27f48",
+        "type": "ui_gauge",
+        "z": "b47e2cfe51585b31",
+        "name": "",
+        "group": "48f09fdf4ff799e1",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Light",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1024",
+        "colors": [
+            "#5e5c64",
+            "#e6e600",
+            "#2ec27e"
+        ],
+        "seg1": "300",
+        "seg2": "900",
+        "diff": false,
+        "className": "",
+        "x": 1370,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "34ce74a486eecde1",
+        "type": "comment",
+        "z": "b47e2cfe51585b31",
+        "name": "Pubblico i comandi della dashboard su MQTT",
+        "info": "",
+        "x": 1030,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8f1262227942fcee",
+        "type": "comment",
+        "z": "b47e2cfe51585b31",
+        "name": "Leggo da MQTT e invio alla dashboard",
+        "info": "",
+        "x": 470,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "93caafc9ce1ca5eb",
+        "type": "junction",
+        "z": "b47e2cfe51585b31",
+        "x": 1180,
+        "y": 280,
+        "wires": [
+            [
+                "234fc6f34ffeae8d"
+            ]
+        ]
+    },
+    {
+        "id": "23bebd960f495689",
+        "type": "mqtt-broker",
+        "name": "mosquitto test",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "48f09fdf4ff799e1",
+        "type": "ui_group",
+        "name": "Witty Dashboard",
+        "tab": "871bc79d2ad9af17",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "871bc79d2ad9af17",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,0 +1,135 @@
+[
+    {
+        "id": "7b6929d3b84bdab0",
+        "type": "http in",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "url": "/api/flr",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 280,
+        "y": 620,
+        "wires": [
+            [
+                "bf6a9c638b92616e",
+                "31138470544ae9fd"
+            ]
+        ]
+    },
+    {
+        "id": "31138470544ae9fd",
+        "type": "debug",
+        "z": "a2b4dd72c07a965d",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "53d569e4ee3a7bc2",
+        "type": "http response",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1040,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "63ceeab9480706a5",
+        "type": "template",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Hello: {{payload.user}} , you are the nr {{payload.value}}!",
+        "output": "str",
+        "x": 740,
+        "y": 660,
+        "wires": [
+            [
+                "53d569e4ee3a7bc2"
+            ]
+        ]
+    },
+    {
+        "id": "bf6a9c638b92616e",
+        "type": "random",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "low": 1,
+        "high": 10,
+        "inte": "true",
+        "property": "payload.value",
+        "x": 460,
+        "y": 620,
+        "wires": [
+            [
+                "e9ee17740b885c22",
+                "53d569e4ee3a7bc2"
+            ]
+        ]
+    },
+    {
+        "id": "117dfe51b1a282b8",
+        "type": "file",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "filename": "nodered_mylog.txt",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1070,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e9ee17740b885c22",
+        "type": "csv",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "user,value",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 730,
+        "y": 700,
+        "wires": [
+            [
+                "117dfe51b1a282b8"
+            ]
+        ]
+    },
+    {
+        "id": "09177b44f0b9fe3b",
+        "type": "comment",
+        "z": "a2b4dd72c07a965d",
+        "name": "Implement simple webservice",
+        "info": "call the webservice at the URL \n\n[http://127.0.0.1:1880/api/flr?user=ivan](http://127.0.0.1:1880/api/flr?user=ivan)",
+        "x": 340,
+        "y": 580,
+        "wires": []
+    }
+]

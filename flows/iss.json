@@ -1,0 +1,185 @@
+[
+    {
+        "id": "5386c6c813f444e4",
+        "type": "inject",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 290,
+        "y": 400,
+        "wires": [
+            [
+                "25ed8a90933cbc57"
+            ]
+        ]
+    },
+    {
+        "id": "25ed8a90933cbc57",
+        "type": "http request",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "api.open-notify.org/iss-now.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 490,
+        "y": 400,
+        "wires": [
+            [
+                "6aee0f44e1ce6012"
+            ]
+        ]
+    },
+    {
+        "id": "a67911fe4983d1da",
+        "type": "debug",
+        "z": "a2b4dd72c07a965d",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6aee0f44e1ce6012",
+        "type": "json",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 670,
+        "y": 400,
+        "wires": [
+            [
+                "1aed7150a5eedc55"
+            ]
+        ]
+    },
+    {
+        "id": "1630eaaf1f5152e9",
+        "type": "worldmap",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "OSMC",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,NatGeo,UKOS,OpTop,HB,ST",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 1080,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1aed7150a5eedc55",
+        "type": "change",
+        "z": "a2b4dd72c07a965d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.name",
+                "pt": "msg",
+                "to": "ISS",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.icon",
+                "pt": "msg",
+                "to": "iss",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.lon",
+                "pt": "msg",
+                "to": "payload.iss_position.longitude",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.lat",
+                "pt": "msg",
+                "to": "payload.iss_position.latitude",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.photoUrl",
+                "pt": "msg",
+                "to": "https://upload.wikimedia.org/wikipedia/commons/1/15/ISS_emblem.png",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 400,
+        "wires": [
+            [
+                "a67911fe4983d1da",
+                "1630eaaf1f5152e9"
+            ]
+        ]
+    },
+    {
+        "id": "979b7719d9b41ec9",
+        "type": "comment",
+        "z": "a2b4dd72c07a965d",
+        "name": "Call a webservice",
+        "info": "",
+        "x": 300,
+        "y": 340,
+        "wires": []
+    }
+]
