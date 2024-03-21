@@ -1,0 +1,557 @@
+[
+    {
+        "id": "b4306d4d26ef896a",
+        "type": "mqtt in",
+        "z": "be6597f9e48ec8a4",
+        "name": "",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "38fc750993efc09f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "b38391df23448a08"
+            ]
+        ]
+    },
+    {
+        "id": "1540cb90db6754b1",
+        "type": "debug",
+        "z": "be6597f9e48ec8a4",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b38391df23448a08",
+        "type": "change",
+        "z": "be6597f9e48ec8a4",
+        "name": "decoded_values",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.uplink_message.decoded_payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 240,
+        "wires": [
+            [
+                "e3b52b3bb7c4a173",
+                "a3c3a116afb8fd5a"
+            ]
+        ]
+    },
+    {
+        "id": "347cc23520f38571",
+        "type": "function",
+        "z": "be6597f9e48ec8a4",
+        "name": "set_led_value",
+        "func": "\n// il valore di frm_payload deve essere un encoding base64\n// per ora ho messo i valori fissi corrispondenti ai valori hex 0 e 1, ottenuti con convertitore online\n// verificare funzioni javascript per ottenere i valori\n\nvar msgq = {payload : {\n  downlinks: [{\n    f_port: 8,\n    frm_payload: (msg.payload===1)?\"AQ==\":\"AA==\",\n    priority: \"NORMAL\"\n  }]\n}\n}\n\n\nreturn msgq\n\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "1a314ac60bbbcccd"
+            ]
+        ]
+    },
+    {
+        "id": "1a314ac60bbbcccd",
+        "type": "mqtt out",
+        "z": "be6597f9e48ec8a4",
+        "name": "set led",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/down/push",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "38fc750993efc09f",
+        "x": 690,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "4136c0aeef7c0480",
+        "type": "mqtt in",
+        "z": "be6597f9e48ec8a4",
+        "name": "",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "38fc750993efc09f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "1540cb90db6754b1"
+            ]
+        ]
+    },
+    {
+        "id": "e3b52b3bb7c4a173",
+        "type": "function",
+        "z": "be6597f9e48ec8a4",
+        "name": "build_chart_series",
+        "func": "var msg_temp = {};\nvar msg_humi = {};\nvar msg_bat = {};\nvar msg_led = {};\n\n\nmsg_temp.topic = 'Temperature °C'\nmsg_temp.payload = msg.payload.temp\n\n\nmsg_humi.topic = 'Humidity %'\nmsg_humi.payload = msg.payload.humi\n\n\nmsg_bat.topic = 'Battery %'\nmsg_bat.payload = msg.payload.battery\n\nmsg_led.topic = 'LED Status'\nmsg_led.payload = msg.payload.led_status*10  // per poter vedere sul grafico qualcosa moltiplico per 10\n\nreturn [msg_temp, msg_humi, msg_bat, msg_led]",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 380,
+        "wires": [
+            [
+                "fab8b577a5dbe0a4"
+            ],
+            [
+                "fab8b577a5dbe0a4"
+            ],
+            [
+                "fab8b577a5dbe0a4"
+            ],
+            [
+                "fab8b577a5dbe0a4"
+            ]
+        ]
+    },
+    {
+        "id": "2c3ec52d0f6bcc6c",
+        "type": "ui-gauge",
+        "z": "be6597f9e48ec8a4",
+        "name": "Temperature",
+        "group": "9e5141713b8a6c31",
+        "order": 2,
+        "width": "2",
+        "height": "1",
+        "gtype": "gauge-34",
+        "gstyle": "needle",
+        "title": "Temperature",
+        "units": "°C",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#f6d32d"
+            },
+            {
+                "from": "18",
+                "color": "#00b500"
+            },
+            {
+                "from": "23",
+                "color": "#f5c211"
+            },
+            {
+                "from": "30",
+                "color": "#c01c28"
+            }
+        ],
+        "min": 0,
+        "max": "45",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 1150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a3c3a116afb8fd5a",
+        "type": "function",
+        "z": "be6597f9e48ec8a4",
+        "name": "split values",
+        "func": "var msg_temp = { payload:msg.payload.temp };\nvar msg_humi = { payload:msg.payload.humi };\nvar msg_battery = { payload:msg.payload.battery };\nvar msg_led = { payload: msg.payload.led_status };\nreturn [msg_temp, msg_humi, msg_battery, msg_led  ];\n",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 240,
+        "wires": [
+            [
+                "2c3ec52d0f6bcc6c"
+            ],
+            [
+                "91c1c18392cf42a8"
+            ],
+            [
+                "3aa9be075946f972"
+            ],
+            [
+                "0ba4416cc61c4fd7"
+            ]
+        ]
+    },
+    {
+        "id": "91c1c18392cf42a8",
+        "type": "ui-gauge",
+        "z": "be6597f9e48ec8a4",
+        "name": "Humi",
+        "group": "9e5141713b8a6c31",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "gtype": "gauge-34",
+        "gstyle": "rounded",
+        "title": "Humidity",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#ffc800"
+            },
+            {
+                "from": "60",
+                "color": "#00b500"
+            },
+            {
+                "from": "80",
+                "color": "#ffc800"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 1130,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3aa9be075946f972",
+        "type": "ui-gauge",
+        "z": "be6597f9e48ec8a4",
+        "name": "Battery",
+        "group": "9e5141713b8a6c31",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "gtype": "gauge-34",
+        "gstyle": "rounded",
+        "title": "Battery",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#a51d2d"
+            },
+            {
+                "from": "60",
+                "color": "#ffc800"
+            },
+            {
+                "from": "80",
+                "color": "#00b500"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": "20",
+        "sizeGap": 4,
+        "sizeKeyThickness": "10",
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 1140,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0ba4416cc61c4fd7",
+        "type": "ui-led",
+        "z": "be6597f9e48ec8a4",
+        "name": "",
+        "group": "9e5141713b8a6c31",
+        "order": 6,
+        "width": "2",
+        "height": "1",
+        "label": "DEVICE LED STATUS",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "states": [
+            {
+                "value": "0",
+                "valueType": "num",
+                "color": "#3d3846"
+            },
+            {
+                "value": "1",
+                "valueType": "num",
+                "color": "#00ff00"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "square",
+        "showBorder": true,
+        "showGlow": true,
+        "x": 1130,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b52e978019174f9e",
+        "type": "ui-switch",
+        "z": "be6597f9e48ec8a4",
+        "name": "led switch",
+        "label": "Device Led Switch",
+        "group": "9e5141713b8a6c31",
+        "order": 5,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "topic": "led_value",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "x": 240,
+        "y": 440,
+        "wires": [
+            [
+                "347cc23520f38571"
+            ]
+        ]
+    },
+    {
+        "id": "5e9ae93f2b3411a9",
+        "type": "ui-chart",
+        "z": "be6597f9e48ec8a4",
+        "group": "9e5141713b8a6c31",
+        "name": "Hist Data",
+        "label": "chart",
+        "order": 7,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "msg",
+        "xAxisType": "time",
+        "yAxisProperty": "",
+        "ymin": "",
+        "ymax": "",
+        "action": "append",
+        "pointShape": "false",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "x": 1200,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e814dfaf5246dc26",
+        "type": "ui-template",
+        "z": "be6597f9e48ec8a4",
+        "group": "9e5141713b8a6c31",
+        "page": "",
+        "ui": "",
+        "name": "header_page",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n    <div>\n        <img src=\"/img/header2.png\" width=\"100%\" />\n    </div>\n</template>\n",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 490,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1e0543cac1b20eca",
+        "type": "comment",
+        "z": "be6597f9e48ec8a4",
+        "name": "LoRaWAN TTN Dashboard2",
+        "info": "",
+        "x": 290,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "fab8b577a5dbe0a4",
+        "type": "junction",
+        "z": "be6597f9e48ec8a4",
+        "x": 1100,
+        "y": 380,
+        "wires": [
+            [
+                "5e9ae93f2b3411a9"
+            ]
+        ]
+    },
+    {
+        "id": "38fc750993efc09f",
+        "type": "mqtt-broker",
+        "name": "TTN",
+        "broker": "eu1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9e5141713b8a6c31",
+        "type": "ui-group",
+        "name": "LoRaWAN Control Panel",
+        "page": "058230ebd8e51fbf",
+        "width": "6",
+        "height": "1",
+        "order": -1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "058230ebd8e51fbf",
+        "type": "ui-page",
+        "name": "LoRaWAN",
+        "ui": "01ff43bd7638f9d9",
+        "path": "/page2",
+        "icon": "network",
+        "layout": "grid",
+        "theme": "b2bdd75ce32707b5",
+        "order": 2,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "01ff43bd7638f9d9",
+        "type": "ui-base",
+        "name": "FLR Workshop",
+        "path": "/dashboard",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "navigationStyle": "default"
+    },
+    {
+        "id": "b2bdd75ce32707b5",
+        "type": "ui-theme",
+        "name": "Theme Name",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094ce",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    }
+]

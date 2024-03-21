@@ -1,0 +1,155 @@
+[
+    {
+        "id": "1fac1118e643f290",
+        "type": "worldmap",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "OSMC",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,NatGeo,UKOS,OpTop,HB,ST",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 880,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "dac702a9d38946ee",
+        "type": "inject",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 940,
+        "wires": [
+            [
+                "31aaa4dd19d83f31"
+            ]
+        ]
+    },
+    {
+        "id": "31aaa4dd19d83f31",
+        "type": "file in",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "filename": "gps_datalog.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 340,
+        "y": 940,
+        "wires": [
+            [
+                "de867f3d4671de2e"
+            ]
+        ]
+    },
+    {
+        "id": "de867f3d4671de2e",
+        "type": "csv",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "name,timestamp,lat,lon,power",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 510,
+        "y": 940,
+        "wires": [
+            [
+                "fee516ab7140f71f"
+            ]
+        ]
+    },
+    {
+        "id": "062469fb0232d9ec",
+        "type": "debug",
+        "z": "d92f918bc2a67861",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "fee516ab7140f71f",
+        "type": "function",
+        "z": "d92f918bc2a67861",
+        "name": "function 4",
+        "func": "\nvar icon_color\nif (msg.payload.power < 30)\n    msg.payload.iconColor = \"#ff0000\"\nelse if (msg.payload.power < 70)\n    msg.payload.iconColor = \"#ffff00\"\nelse\n    msg.payload.iconColor = \"#00ff00\"\n\nmsg.payload.icon = \"fa-circle\"\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 940,
+        "wires": [
+            [
+                "4bee9491a7785e74"
+            ]
+        ]
+    },
+    {
+        "id": "4bee9491a7785e74",
+        "type": "junction",
+        "z": "d92f918bc2a67861",
+        "x": 760,
+        "y": 940,
+        "wires": [
+            [
+                "1fac1118e643f290",
+                "062469fb0232d9ec"
+            ]
+        ]
+    }
+]

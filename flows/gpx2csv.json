@@ -1,0 +1,264 @@
+[
+    {
+        "id": "0fd54e02edf45e31",
+        "type": "xml",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "08904401b0759dfd"
+            ]
+        ]
+    },
+    {
+        "id": "d0ba6fc01d1d6d3c",
+        "type": "inject",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "bbe154e74d89de86"
+            ]
+        ]
+    },
+    {
+        "id": "bbe154e74d89de86",
+        "type": "file in",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "filename": "/home/ivan/Scaricati/tourguide_12572.gpx",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "0fd54e02edf45e31"
+            ]
+        ]
+    },
+    {
+        "id": "dae77e6451a453c0",
+        "type": "debug",
+        "z": "d92f918bc2a67861",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "08904401b0759dfd",
+        "type": "function",
+        "z": "d92f918bc2a67861",
+        "name": "decode track",
+        "func": "\nvar segments = msg.payload.gpx.trk[0].trkseg\n\nmsg.payload = segments\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 320,
+        "wires": [
+            [
+                "1cbd88564f3642f4"
+            ]
+        ]
+    },
+    {
+        "id": "1cbd88564f3642f4",
+        "type": "split",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 770,
+        "y": 380,
+        "wires": [
+            [
+                "4234f1cac3eea146"
+            ]
+        ]
+    },
+    {
+        "id": "4234f1cac3eea146",
+        "type": "change",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.trkpt",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 440,
+        "wires": [
+            [
+                "4e55a36dfcd653e6"
+            ]
+        ]
+    },
+    {
+        "id": "4e55a36dfcd653e6",
+        "type": "split",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1030,
+        "y": 500,
+        "wires": [
+            [
+                "9f2932691457d963"
+            ]
+        ]
+    },
+    {
+        "id": "9f2932691457d963",
+        "type": "change",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.lat",
+                "pt": "msg",
+                "to": "payload.$.lat",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload.lon",
+                "pt": "msg",
+                "to": "payload.$.lon",
+                "tot": "msg",
+                "dc": true
+            },
+            {
+                "t": "set",
+                "p": "payload.name",
+                "pt": "msg",
+                "to": "payload.time[0]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1120,
+        "y": 600,
+        "wires": [
+            [
+                "70c5c26c60cb61f9"
+            ]
+        ]
+    },
+    {
+        "id": "70c5c26c60cb61f9",
+        "type": "csv",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "name,lat,lon",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 590,
+        "y": 660,
+        "wires": [
+            [
+                "a16b709e0877bc24"
+            ]
+        ]
+    },
+    {
+        "id": "a16b709e0877bc24",
+        "type": "file",
+        "z": "d92f918bc2a67861",
+        "name": "",
+        "filename": "gps_export.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 880,
+        "y": 680,
+        "wires": [
+            [
+                "2f697d879d4d3367"
+            ]
+        ]
+    },
+    {
+        "id": "2f697d879d4d3367",
+        "type": "junction",
+        "z": "d92f918bc2a67861",
+        "x": 1100,
+        "y": 680,
+        "wires": [
+            [
+                "dae77e6451a453c0"
+            ]
+        ]
+    }
+]

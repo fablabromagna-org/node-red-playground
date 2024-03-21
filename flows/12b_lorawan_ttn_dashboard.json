@@ -1,0 +1,424 @@
+[
+    {
+        "id": "d559a7d2c2a419f5",
+        "type": "tab",
+        "label": "LoRaWAN TTN Integration",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5a082dd1cc4e9ea8",
+        "type": "mqtt in",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "38fc750993efc09f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "f287a7fbf51d3636"
+            ]
+        ]
+    },
+    {
+        "id": "485987eb2c9f64fc",
+        "type": "debug",
+        "z": "d559a7d2c2a419f5",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "453b1b71a97f2bcc",
+        "type": "ui_gauge",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "group": "a38b3110776998d5",
+        "order": 2,
+        "width": "5",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temp}}",
+        "min": 0,
+        "max": "45",
+        "colors": [
+            "#07acf2",
+            "#5ce600",
+            "#ca3838"
+        ],
+        "seg1": "18",
+        "seg2": "28",
+        "diff": false,
+        "className": "",
+        "x": 1170,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f287a7fbf51d3636",
+        "type": "change",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.uplink_message.decoded_payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 240,
+        "wires": [
+            [
+                "453b1b71a97f2bcc",
+                "6b326567149427dc",
+                "59a76aeb55f08907",
+                "1d810461e1f89eae",
+                "18ef9b7b35b0e379"
+            ]
+        ]
+    },
+    {
+        "id": "6b326567149427dc",
+        "type": "ui_gauge",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "group": "a38b3110776998d5",
+        "order": 3,
+        "width": "5",
+        "height": "4",
+        "gtype": "donut",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{msg.payload.humi}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#ffff0f",
+            "#1be600",
+            "#ffff0f"
+        ],
+        "seg1": "50",
+        "seg2": "70",
+        "diff": false,
+        "className": "",
+        "x": 1160,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "59a76aeb55f08907",
+        "type": "ui_gauge",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "group": "a38b3110776998d5",
+        "order": 4,
+        "width": "3",
+        "height": "4",
+        "gtype": "wave",
+        "title": "Battery",
+        "label": "%",
+        "format": "{{msg.payload.battery}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1160,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "27c3511f89e9332a",
+        "type": "ui_switch",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "label": "Device LED ON/OFF",
+        "tooltip": "",
+        "group": "a38b3110776998d5",
+        "order": 5,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "led_value",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 280,
+        "y": 540,
+        "wires": [
+            [
+                "2dc37825b95c4b0e"
+            ]
+        ],
+        "icon": "node-red/light.svg"
+    },
+    {
+        "id": "2dc37825b95c4b0e",
+        "type": "function",
+        "z": "d559a7d2c2a419f5",
+        "name": "set_led_value",
+        "func": "\n// il valore di frm_payload deve essere un encoding base64\n// per ora ho messo i valori fissi corrispondenti ai valori hex 0 e 1, ottenuti con convertitore online\n// verificare funzioni javascript per ottenere i valori\n\nvar msgq = {payload : {\n  downlinks: [{\n    f_port: 8,\n    frm_payload: (msg.payload===1)?\"AQ==\":\"AA==\",\n    priority: \"NORMAL\"\n  }]\n}\n}\n\n\nreturn msgq\n\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "7a5226e60e4f4af6"
+            ]
+        ]
+    },
+    {
+        "id": "7a5226e60e4f4af6",
+        "type": "mqtt out",
+        "z": "d559a7d2c2a419f5",
+        "name": "set led",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/down/push",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "38fc750993efc09f",
+        "x": 770,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "212a8e6ef81c4f80",
+        "type": "mqtt in",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "38fc750993efc09f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "485987eb2c9f64fc"
+            ]
+        ]
+    },
+    {
+        "id": "528b263852d3b1bb",
+        "type": "ui_chart",
+        "z": "d559a7d2c2a419f5",
+        "name": "",
+        "group": "a38b3110776998d5",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "label": "Historical Data",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "monotone",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#b13dff",
+            "#ff7f0e",
+            "#ffbf0f",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1180,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d810461e1f89eae",
+        "type": "function",
+        "z": "d559a7d2c2a419f5",
+        "name": "build_chart_series",
+        "func": "var msg_temp = {};\nvar msg_humi = {};\nvar msg_bat = {};\nvar msg_led = {};\n\n\nmsg_temp.topic = 'Temperature °C'\nmsg_temp.payload = msg.payload.temp\n\n\nmsg_humi.topic = 'Humidity %'\nmsg_humi.payload = msg.payload.humi\n\n\nmsg_bat.topic = 'Battery %'\nmsg_bat.payload = msg.payload.battery\n\nmsg_led.topic = 'LED Status'\nmsg_led.payload = msg.payload.led_status*10  // per poter vedere sul grafico qualcosa moltiplico per 10\n\nreturn [msg_temp, msg_humi, msg_bat, msg_led]",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 460,
+        "wires": [
+            [
+                "528b263852d3b1bb"
+            ],
+            [
+                "528b263852d3b1bb"
+            ],
+            [
+                "528b263852d3b1bb"
+            ],
+            [
+                "528b263852d3b1bb"
+            ]
+        ]
+    },
+    {
+        "id": "18ef9b7b35b0e379",
+        "type": "ui_template",
+        "z": "d559a7d2c2a419f5",
+        "group": "a38b3110776998d5",
+        "name": "led status",
+        "order": 6,
+        "width": "5",
+        "height": "1",
+        "format": "<div layout=\"row\" layout-align=\"space-between\">\n    <p>The LED Status is </p>\n    <font color=\"{{(msg.payload.led_status === 1) ? 'green' : 'grey'}}\">\n        {{(msg.payload.led_status === 1) ? 'ON' : 'OFF'}}\n    </font>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1160,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8c519cac4a0f29f0",
+        "type": "ui_media",
+        "z": "d559a7d2c2a419f5",
+        "group": "a38b3110776998d5",
+        "name": "logo FLR",
+        "width": "13",
+        "height": "2",
+        "order": 1,
+        "category": "image",
+        "file": "header2.png",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 240,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38fc750993efc09f",
+        "type": "mqtt-broker",
+        "name": "TTN",
+        "broker": "eu1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "a38b3110776998d5",
+        "type": "ui_group",
+        "name": "LoRaWAN Sensor FLR-IT1 - The Things Stack MQTT Integration",
+        "tab": "accfed7efea8c751",
+        "order": 1,
+        "disp": true,
+        "width": "13",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "accfed7efea8c751",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
