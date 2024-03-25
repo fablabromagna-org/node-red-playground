@@ -15,7 +15,7 @@
 usage() { echo "Usage: $0 start|stop|install_modules|sync  [-i <nr_of_instances>] " 1>&2; exit 1; }
 
 
-NODERED_IMAGE=nodered/node-red-docker
+NODERED_IMAGE=nodered/node-red
 NR_INSTANCES=2
 NR_PREFIX=nodered_ws
 
